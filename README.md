@@ -46,3 +46,31 @@ Journalists upload articles to the news portal website. Each article has an auth
     methods:
    - publish_article_title - Publish only article title and article name
    - publish_full_article - Publish only article title and article text
+
+## Installation
+
+1) Clone repository
+```
+git clone https://github.com/Ivanmatv/news_library.git
+```
+2) Change directory
+```
+cd news_library
+```
+
+## Usage 
+
+Launching the application
+```
+python main.py
+```
+
+## Result 
+
+After lunch application, you receive message in the terminal
+```
+Статья Python опубликована автором Ваня
+```
+
+## Requirements
+ - Python 
