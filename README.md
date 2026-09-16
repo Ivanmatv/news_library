@@ -1,8 +1,6 @@
 # “News Library”
 Journalists upload articles to the news portal website. Each article has an author, but the author can write articles for third‑party platforms and is not part of the website.
 
- - Conditions: Create a structure that allows the author to write an article and publish it. After publication, the console should display: “Article [title] published by author [name].”
-
 ## Structure
 
 ### author.py
@@ -60,7 +58,7 @@ cd news_library
 
 ## Usage 
 
-Launching the application
+Launch the application
 ```
 python main.py
 ```
