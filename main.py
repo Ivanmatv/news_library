@@ -15,7 +15,7 @@ article = Article(title=title, text=text)
 article_title = article.get_title()
 article_text = article.get_text()
 
-author_name = author.get_author_name()
+author_name = author.get_name()
 
 news_portal_name = "Газета"
 
