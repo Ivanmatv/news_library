@@ -9,5 +9,5 @@ class Author:
         return self.__name
 
     def write_article(self, title: str, text: str):
-        article = Article(title, text)
+        article = Article(title, text, self.__name)
         return article

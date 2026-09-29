@@ -63,10 +63,9 @@ class NewsPortal:
             dictionary_key=text_dictionary_key
         )
 
-    def publish_article(self, author: Author) -> None:
-        author_name = author.get_name()
+    def publish_article(self, article: Article) -> None:
+        author_name = article.get_author()
         if author_name in self.__authors:
-            print(self.__authors)
             empty_placeholder = ""
             title = self.__authors[author_name].get(self.title_dictionary_key, empty_placeholder)
             text = self.__authors[author_name].get(self.text_dictionary_key, empty_placeholder)
