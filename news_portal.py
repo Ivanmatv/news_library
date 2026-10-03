@@ -4,47 +4,39 @@ from news_library.author import Author
 
 class NewsPortal:
     def __init__(self, name: str) -> None:
-        self.__name = name
-        self.__authors = {}
-        self.__article = {}
-        self.text_dictionary_key = "text"
-        self.title_dictionary_key = "title"
+        self.__name: str = name
+        self.__authors: list = []
+        self.__article: dict = {}
+        self.__TEXT_DICTIONARY_KEY = "text"
+        self.__TITLE_DICTIONARY_KEY = "title"
 
-    @property
-    def name(self) -> str:
+    def get_name(self) -> str:
         return self.__name
-
-    def _remove_logic(self, author_name: str, dictionary_key: str):
-        if author_name in self.__authors:
-            if dictionary_key:
-                del self.__authors[author_name][dictionary_key]
-            else:
-                del self.__authors[author_name]
-        else:
-            print("Такого автора нет!")
 
     def add_author(self, author: Author) -> None:
         author_name = author.get_name()
-        self.__authors[author_name] = self.__article
+        if author_name in self.__authors:
+            self.__authors.append(author_name)
+        else:
+            print("Такой автор уже есть в списке!")
 
     def remove_author(self, author: Author) -> None:
         author_name = author.get_name()
-        author_name_dictionary_key = "author_name"
-        self._remove_logic(
-            author_name=author_name,
-            dictionary_key=author_name_dictionary_key
-        )
+        if author_name in self.__authors:
+            self.__authors.remove(author_name)
+        else:
+            print("Такого автора нет в списке!")
 
     def add_title(self, article: Article, author: Author) -> None:
         author_name = author.get_name()
         if author_name in self.__authors:
             article_title = article.get_title()
-            self.__article[self.title_dictionary_key] = article_title
+            self.__article[self.__TITLE_DICTIONARY_KEY] = article_title
 
     def remove_title(self, author: Author) -> None:
         author_name = author.get_name()
         title_dictionary_key = "title"
-        self._remove_logic(
+        self.__remove_key(
             author_name=author_name,
             dictionary_key=title_dictionary_key
         )
@@ -53,25 +45,33 @@ class NewsPortal:
         author_name = author.get_name()
         if author_name in self.__authors:
             article_text = article.get_text()
-            self.__article[self.text_dictionary_key] = article_text
+            self.__article[self.__TEXT_DICTIONARY_KEY] = article_text
 
     def remove_text(self, author: Author) -> None:
         author_name = author.get_name()
-        text_dictionary_key = "text"
-        self._remove_logic(
+        self.__remove_key(
             author_name=author_name,
-            dictionary_key=text_dictionary_key
+            dictionary_key=self.__TEXT_DICTIONARY_KEY
         )
 
     def publish_article(self, article: Article) -> None:
         author_name = article.get_author()
         if author_name in self.__authors:
             empty_placeholder = ""
-            title = self.__authors[author_name].get(self.title_dictionary_key, empty_placeholder)
-            text = self.__authors[author_name].get(self.text_dictionary_key, empty_placeholder)
+            title = self.__authors[author_name].get(self.__TITLE_DICTIONARY_KEY, empty_placeholder)
+            text = self.__authors[author_name].get(self.__TEXT_DICTIONARY_KEY, empty_placeholder)
 
             print(
                 f"\tСтатья '{title}' опубликована "
                 f"автором - {author_name}."
                 f"{text}"
             )
+
+    def __remove_key(self, author_name: str, dictionary_key: str):
+        if author_name in self.__authors:
+            if dictionary_key:
+                del self.__article[author_name][dictionary_key]
+            else:
+                del self.__article[author_name]
+        else:
+            print("Такого автора нет!")
