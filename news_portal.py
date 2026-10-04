@@ -1,12 +1,11 @@
-from news_library.article import Article
 from news_library.author import Author
 
 
 class NewsPortal:
     def __init__(self, name: str) -> None:
         self.__name: str = name
-        self.__authors: list = []
-        self.__article: dict = {}
+        self.__authors: dict = {}
+        self.__articles: dict = {}
         self.__TEXT_DICTIONARY_KEY = "text"
         self.__TITLE_DICTIONARY_KEY = "title"
 
@@ -15,63 +14,47 @@ class NewsPortal:
 
     def add_author(self, author: Author) -> None:
         author_name = author.get_name()
-        if author_name in self.__authors:
-            self.__authors.append(author_name)
-        else:
-            print("Такой автор уже есть в списке!")
+        self.__authors[author_name] = self.__articles
 
     def remove_author(self, author: Author) -> None:
         author_name = author.get_name()
+        self.__remove_key(author=author_name)
+
+    def write_article(self, author: Author, text: str, title: str) -> None:
+        author_name = author.get_name()
+        article = self.__authors[author_name]
+
         if author_name in self.__authors:
-            self.__authors.remove(author_name)
+            if title not in article:
+                article = author.write_article(text=text, title=title)
+                article_title = article.get_title()
+                article_text = article.get_text()
+                self.__articles[article_title] = article_text
+            else:
+                print("Такая статья уже есть!")
         else:
-            print("Такого автора нет в списке!")
+            print("Такого автора нет!")
 
-    def add_title(self, article: Article, author: Author) -> None:
+    def publish_article(self, author: Author, title: str) -> None:
         author_name = author.get_name()
+        empty_placeholder = ""
+
         if author_name in self.__authors:
-            article_title = article.get_title()
-            self.__article[self.__TITLE_DICTIONARY_KEY] = article_title
-
-    def remove_title(self, author: Author) -> None:
-        author_name = author.get_name()
-        title_dictionary_key = "title"
-        self.__remove_key(
-            author_name=author_name,
-            dictionary_key=title_dictionary_key
-        )
-
-    def add_text(self, article: Article, author: Author) -> None:
-        author_name = author.get_name()
-        if author_name in self.__authors:
-            article_text = article.get_text()
-            self.__article[self.__TEXT_DICTIONARY_KEY] = article_text
-
-    def remove_text(self, author: Author) -> None:
-        author_name = author.get_name()
-        self.__remove_key(
-            author_name=author_name,
-            dictionary_key=self.__TEXT_DICTIONARY_KEY
-        )
-
-    def publish_article(self, article: Article) -> None:
-        author_name = article.get_author()
-        if author_name in self.__authors:
-            empty_placeholder = ""
-            title = self.__authors[author_name].get(self.__TITLE_DICTIONARY_KEY, empty_placeholder)
-            text = self.__authors[author_name].get(self.__TEXT_DICTIONARY_KEY, empty_placeholder)
+            text = self.__authors[author_name].get(title, empty_placeholder)
 
             print(
                 f"\tСтатья '{title}' опубликована "
                 f"автором - {author_name}."
                 f"{text}"
             )
+        else:
+            print("Такого автора нет!")
 
-    def __remove_key(self, author_name: str, dictionary_key: str):
-        if author_name in self.__authors:
+    def __remove_key(self, author: str, dictionary_key=None):
+        if author in self.__authors:
             if dictionary_key:
-                del self.__article[author_name][dictionary_key]
+                del self.__authors[author][dictionary_key]
             else:
-                del self.__article[author_name]
+                del self.__authors[author]
         else:
             print("Такого автора нет!")
