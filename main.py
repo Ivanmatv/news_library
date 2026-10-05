@@ -27,3 +27,7 @@ text_java = """
 
 news_portal.write_article(author=author, title=title_java , text=text_java)
 news_portal.publish_article(author=author, title=title_java)
+
+news_portal.remove_article(author=author, title=title_java)
+print()
+news_portal.publish_article(author=author, title=title_java)

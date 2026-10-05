@@ -35,11 +35,16 @@ class NewsPortal:
         else:
             print("Такого автора нет!")
 
+    def remove_article(self, author: Author, title: str) -> None:
+        author_name = author.get_name()
+        self.__remove_key(author=author_name, dictionary_key=title)
+
     def publish_article(self, author: Author, title: str) -> None:
         author_name = author.get_name()
         empty_placeholder = ""
+        article_title = self.__authors[author_name]
 
-        if author_name in self.__authors:
+        if author_name in self.__authors and title in article_title:
             text = self.__authors[author_name].get(title, empty_placeholder)
 
             print(
@@ -48,7 +53,7 @@ class NewsPortal:
                 f"{text}"
             )
         else:
-            print("Такого автора нет!")
+            print("Такой статьи нет!")
 
     def __remove_key(self, author: str, dictionary_key=None):
         if author in self.__authors:
